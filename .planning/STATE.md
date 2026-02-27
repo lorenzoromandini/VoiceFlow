@@ -2,7 +2,7 @@
 
 **Project:** VoiceFlow Notes  
 **Core Value:** Users can speak naturally to instantly capture their thoughts as text notes that sync across all their devices.  
-**Updated:** 2025-02-27
+**Updated:** 2025-02-27 (Expanded to 12 phases)
 
 ---
 
@@ -47,14 +47,27 @@
 ### Progress Overview
 
 ```
-[░░░░░░░░░░░░░░░░░░░░] 0% Complete (0/6 Phases)
+[░░░░░░░░░░░░░░░░░░░░] 0% Complete (0/12 Phases)
 
-Phase 1: Foundation      [░░░░░░░░░░] 0% — Pending
-Phase 2: Local Notes     [░░░░░░░░░░] 0% — Pending
-Phase 3: Voice Input     [░░░░░░░░░░] 0% — Pending
-Phase 4: Sync Infra      [░░░░░░░░░░] 0% — Pending
-Phase 5: Web/PWA         [░░░░░░░░░░] 0% — Pending
-Phase 6: Polish          [░░░░░░░░░░] 0% — Pending
+FOUNDATION (Phases 1-3):
+  Phase 1: Project Setup      [░░░░░░░░░░] 0% — Pending
+  Phase 2: Authentication     [░░░░░░░░░░] 0% — Pending
+  Phase 3: Navigation & UI      [░░░░░░░░░░] 0% — Pending
+
+LOCAL NOTES (Phases 4-6):
+  Phase 4: Local Storage      [░░░░░░░░░░] 0% — Pending
+  Phase 5: Note CRUD          [░░░░░░░░░░] 0% — Pending
+  Phase 6: Search & List      [░░░░░░░░░░] 0% — Pending
+
+VOICE INPUT (Phases 7-9):
+  Phase 7: Voice Recording    [░░░░░░░░░░] 0% — Pending
+  Phase 8: STT Integration    [░░░░░░░░░░] 0% — Pending
+  Phase 9: Cross-Platform     [░░░░░░░░░░] 0% — Pending
+
+SYNC & WEB (Phases 10-12):
+  Phase 10: Connectivity      [░░░░░░░░░░] 0% — Pending
+  Phase 11: Firebase Sync     [░░░░░░░░░░] 0% — Pending
+  Phase 12: PWA              [░░░░░░░░░░] 0% — Pending
 ```
 
 ### Requirements Status
@@ -73,13 +86,22 @@ Phase 6: Polish          [░░░░░░░░░░] 0% — Pending
 - **Requirements Delivered:** 0
 - **Known Blockers:** 0
 
+### Phase Distribution
+| Cluster | Phases | Theme | Status |
+|---------|--------|-------|--------|
+| Foundation | 1-3 | Setup, Auth, Navigation | Pending |
+| Local Notes | 4-6 | Storage, CRUD, Search | Pending |
+| Voice Input | 7-9 | Recording, STT, Cross-Platform | Pending |
+| Cloud Sync | 10-11 | Queue, Firebase | Pending |
+| Web/PWA | 12 | PWA, Web optimization | Pending |
+
 ### Quality Indicators
 - **Critical Bugs:** 0
 - **Known Pitfalls Avoided:** 0
 - **Research Debt:**
-  - Phase 2 (Voice): Web Speech API compatibility, Android offline language packs
-  - Phase 3 (Sync): Conflict resolution refinement, exponential backoff tuning
-  - Phase 5 (Web/PWA): Service worker configuration, IndexedDB limitations
+  - Phase 8-9 (Voice): Web Speech API compatibility, Android offline language packs
+  - Phase 10 (Sync): Conflict resolution refinement, exponential backoff tuning
+  - Phase 12 (Web/PWA): Service worker configuration, IndexedDB limitations
 
 ---
 
@@ -93,6 +115,7 @@ Phase 6: Polish          [░░░░░░░░░░] 0% — Pending
 | 2025-02-27 | Local-first architecture | Core value requires offline functionality |
 | 2025-02-27 | Plain text only | Speed over formatting complexity |
 | 2025-02-27 | PWA for desktop | Cross-platform web instead of separate desktop app |
+| 2025-02-27 | Expanded to 12 phases | Comprehensive depth for finer-grained milestones |
 
 ### Known Pitfalls to Avoid
 1. **Using Firestore as primary offline storage** — Use sqflite as source of truth
@@ -113,10 +136,10 @@ Phase 6: Polish          [░░░░░░░░░░] 0% — Pending
 ## Session Continuity
 
 ### Last Action
-Created roadmap with 6 phases, 37 requirements mapped, ready to begin Phase 1.
+Expanded roadmap from 6 to 12 phases for comprehensive depth. Each phase now has 1-3 core requirements for focused delivery.
 
 ### Next Action
-Run `/gsd-plan-phase 1` to generate executable plan for Phase 1: Foundation — Auth & Core UI.
+Run `/gsd-plan-phase 1` to generate executable plan for Phase 1: Project Setup & Architecture Foundation.
 
 ### Open Questions
 1. Firebase project setup — need to create Firebase project for auth
@@ -124,8 +147,8 @@ Run `/gsd-plan-phase 1` to generate executable plan for Phase 1: Foundation — 
 3. Voice testing — will need physical Android device for speech recognition testing
 
 ### Context for Next Session
-- Phase 1 contains 10 requirements focused on auth, responsive UI, and launch performance
-- Success criteria include sub-3-second launch time and multi-screen responsive layout
+- Phase 1 contains 3 requirements: local storage foundation, Android build, error handling
+- Success criteria include clean architecture setup and working local database
 - Research indicates Riverpod + go_router + sqflite as recommended stack
 - No blockers anticipated for Phase 1
 
@@ -133,22 +156,28 @@ Run `/gsd-plan-phase 1` to generate executable plan for Phase 1: Foundation — 
 
 ## Quick Reference
 
-### Phase Quick Links
-| Phase | Goal | Requirements |
-|-------|------|--------------|
-| 1 | Foundation — Auth & Core UI | 10 |
-| 2 | Local Notes — Storage & Management | 10 |
-| 3 | Voice Input — Recording & Transcription | 9 |
-| 4 | Sync Infrastructure — Offline-Online Bridge | 6 |
-| 5 | Web/PWA — Cross-Platform Completion | 3 |
-| 6 | Polish — Enhancements & UX Refinement | 0 (flexible) |
+### Phase Quick Links (Comprehensive)
+| Phase | Name | Requirements | Dependencies |
+|-------|------|--------------|--------------|
+| 1 | Project Setup & Architecture | 3 | None |
+| 2 | Authentication System | 3 | Phase 1 |
+| 3 | Navigation & UI Framework | 5 | Phase 1, 2 |
+| 4 | Local Storage Architecture | 1 | Phase 1 |
+| 5 | Note CRUD Operations | 5 | Phase 3, 4 |
+| 6 | Search & List Management | 3 | Phase 4, 5 |
+| 7 | Voice Recording System | 3 | Phase 5 |
+| 8 | Speech-to-Text Integration | 3 | Phase 7 |
+| 9 | Cross-Platform Voice Support | 3 | Phase 8 |
+| 10 | Connectivity & Sync Queue | 3 | Phase 4, 6 |
+| 11 | Firebase Cloud Sync | 2 | Phase 2, 10 |
+| 12 | PWA & Web Optimization | 2 | Phase 3, 9, 11 |
 
 ### Important File Locations
 - `.planning/PROJECT.md` — Project vision and scope
-- `.planning/REQUIREMENTS.md` — All v1/v2 requirements
-- `.planning/ROADMAP.md` — Phase structure and success criteria
+- `.planning/REQUIREMENTS.md` — All v1/v2 requirements with phase mappings
+- `.planning/ROADMAP.md` — Phase structure and success criteria (12 phases)
 - `.planning/research/SUMMARY.md` — Technical research findings
-- `.planning/config.json` — GSD configuration
+- `.planning/config.json` — GSD configuration (depth: comprehensive)
 
 ### Commands
 - `/gsd-plan-phase N` — Create plan for phase N
