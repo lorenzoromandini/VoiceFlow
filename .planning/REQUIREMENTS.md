@@ -108,47 +108,57 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
-| AUTH-05 | Phase 1 | Pending |
-| NOTE-01 | Phase 2 | Pending |
-| NOTE-02 | Phase 2 | Pending |
-| NOTE-03 | Phase 2 | Pending |
-| NOTE-04 | Phase 2 | Pending |
-| NOTE-05 | Phase 2 | Pending |
-| NOTE-06 | Phase 2 | Pending |
-| VOICE-01 | Phase 3 | Pending |
-| VOICE-02 | Phase 3 | Pending |
-| VOICE-03 | Phase 3 | Pending |
-| VOICE-04 | Phase 3 | Pending |
-| VOICE-05 | Phase 3 | Pending |
-| VOICE-06 | Phase 3 | Pending |
-| VOICE-07 | Phase 3 | Pending |
-| SYNC-01 | Phase 2 | Pending |
-| SYNC-02 | Phase 4 | Pending |
-| SYNC-03 | Phase 4 | Pending |
-| SYNC-04 | Phase 4 | Pending |
-| SYNC-05 | Phase 4 | Pending |
-| SYNC-06 | Phase 2 | Pending |
-| SYNC-07 | Phase 4 | Pending |
-| PLATFORM-01 | Phase 1 | Pending |
-| PLATFORM-02 | Phase 5 | Pending |
-| PLATFORM-03 | Phase 5 | Pending |
-| PLATFORM-04 | Phase 1 | Pending |
-| PLATFORM-05 | Phase 5 | Pending |
-| UX-01 | Phase 1 | Pending |
-| UX-02 | Phase 2 | Pending |
-| UX-03 | Phase 3 | Pending |
-| UX-04 | Phase 1 | Pending |
-| UX-05 | Phase 1 | Pending |
-| UX-06 | Phase 2 | Pending |
+| AUTH-01 | Phase 1 | ⏸️ Pending |
+| AUTH-02 | Phase 1 | ⏸️ Pending |
+| AUTH-03 | Phase 1 | ⏸️ Pending |
+| AUTH-04 | Phase 1 | ⏸️ Pending |
+| AUTH-05 | Phase 1 | ⏸️ Pending |
+| NOTE-01 | Phase 2 | ⏸️ Pending |
+| NOTE-02 | Phase 2 | ⏸️ Pending |
+| NOTE-03 | Phase 2 | ⏸️ Pending |
+| NOTE-04 | Phase 2 | ⏸️ Pending |
+| NOTE-05 | Phase 2 | ⏸️ Pending |
+| NOTE-06 | Phase 2 | ⏸️ Pending |
+| VOICE-01 | Phase 3 | ⏸️ Pending |
+| VOICE-02 | Phase 3 | ⏸️ Pending |
+| VOICE-03 | Phase 3 | ⏸️ Pending |
+| VOICE-04 | Phase 3 | ⏸️ Pending |
+| VOICE-05 | Phase 3 | ⏸️ Pending |
+| VOICE-06 | Phase 3 | ⏸️ Pending |
+| VOICE-07 | Phase 3 | ⏸️ Pending |
+| SYNC-01 | Phase 2 | ⏸️ Pending |
+| SYNC-02 | Phase 4 | ⏸️ Pending |
+| SYNC-03 | Phase 4 | ⏸️ Pending |
+| SYNC-04 | Phase 4 | ⏸️ Pending |
+| SYNC-05 | Phase 4 | ⏸️ Pending |
+| SYNC-06 | Phase 2 | ⏸️ Pending |
+| SYNC-07 | Phase 4 | ⏸️ Pending |
+| PLATFORM-01 | Phase 1 | ⏸️ Pending |
+| PLATFORM-02 | Phase 5 | ⏸️ Pending |
+| PLATFORM-03 | Phase 5 | ⏸️ Pending |
+| PLATFORM-04 | Phase 1 | ⏸️ Pending |
+| PLATFORM-05 | Phase 5 | ⏸️ Pending |
+| UX-01 | Phase 1 | ⏸️ Pending |
+| UX-02 | Phase 2 | ⏸️ Pending |
+| UX-03 | Phase 3 | ⏸️ Pending |
+| UX-04 | Phase 1 | ⏸️ Pending |
+| UX-05 | Phase 1 | ⏸️ Pending |
+| UX-06 | Phase 2 | ⏸️ Pending |
 
 **Coverage:**
 - v1 requirements: 37 total
 - Mapped to phases: 37
 - Unmapped: 0 ✓
+
+**Phase Summary:**
+| Phase | Name | Requirement Count |
+|-------|------|-------------------|
+| 1 | Foundation — Auth & Core UI | 10 |
+| 2 | Local Notes — Storage & Management | 10 |
+| 3 | Voice Input — Recording & Transcription | 9 |
+| 4 | Sync Infrastructure — Offline-Online Bridge | 6 |
+| 5 | Web/PWA — Cross-Platform Completion | 3 |
+| 6 | Polish — Enhancements & UX Refinement | 0 (flexible) |
 
 ---
 *Requirements defined: 2025-02-27*
