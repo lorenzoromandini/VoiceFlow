@@ -20,3 +20,19 @@ class NetworkException extends AppException {
 class ValidationException extends AppException {
   const ValidationException(super.message, {super.code, super.stackTrace});
 }
+
+/// Exception types for note operations
+class NoteException extends AppException {
+  final NoteErrorCode code;
+
+  const NoteException(this.code, super.message, {super.stackTrace})
+      : super(code: code.name);
+}
+
+enum NoteErrorCode {
+  notFound,
+  saveFailed,
+  deleteFailed,
+  invalidData,
+  databaseError,
+}
