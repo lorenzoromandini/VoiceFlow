@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:voiceflow_notes/core/di/providers.dart';
-import 'package:voiceflow_notes/presentation/app.dart';
+import 'presentation/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final container = ProviderContainer();
-  final db = container.read(localDatabaseProvider);
-  await db.initialize();
+  // Database initialization will be added per-platform
+  // For now, skip to allow web builds
 
   runApp(
-    UncontrolledProviderScope(
-      container: container,
-      child: const VoiceFlowApp(),
+    const ProviderScope(
+      child: VoiceFlowApp(),
     ),
   );
 }
