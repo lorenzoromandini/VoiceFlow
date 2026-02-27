@@ -50,6 +50,13 @@
 - [ ] **PLATFORM-04**: UI adapts to mobile, tablet, and desktop screen sizes
 - [ ] **PLATFORM-05**: Platform-specific features degrade gracefully (e.g., web STT limited browsers)
 
+### Trash & Recovery (TRASH)
+
+- [ ] **TRASH-01**: User can view list of deleted notes in trash
+- [ ] **TRASH-02**: User can restore a deleted note from trash
+- [ ] **TRASH-03**: User can permanently delete a note from trash with confirmation
+- [ ] **TRASH-04**: Deleted notes are permanently removed after 30 days automatically
+
 ### User Experience (UX)
 
 - [ ] **UX-01**: App launches to note list in under 3 seconds

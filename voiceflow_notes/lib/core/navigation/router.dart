@@ -7,6 +7,7 @@ import '../../presentation/pages/settings_page.dart';
 import '../../presentation/pages/about_page.dart';
 import '../../presentation/pages/trash_page.dart';
 import '../../presentation/pages/welcome_page.dart';
+import '../../presentation/pages/trashed_note_detail_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -55,6 +56,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/trash',
         name: 'trash',
         builder: (context, state) => const TrashPage(),
+      ),
+      
+      // Trash note detail
+      GoRoute(
+        path: '/trash/:id',
+        name: 'trash-detail',
+        builder: (context, state) {
+          final noteId = state.pathParameters['id']!;
+          return TrashedNoteDetailPage(noteId: noteId);
+        },
       ),
       
       // About

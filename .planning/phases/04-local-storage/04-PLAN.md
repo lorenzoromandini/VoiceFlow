@@ -1464,7 +1464,258 @@
 
 ---
 
-### Plan 04-10: Test CRUD Operations
+### Plan 04-10: Add View Deleted Note Detail
+
+**Task:** Allow users to view full content of deleted notes before restoring
+
+```xml
+<task>
+  <action>Create TrashedNoteDetailPage</action>
+  <write file="lib/presentation/pages/trashed_note_detail_page.dart">
+    import 'package:flutter/material.dart';
+    import 'package:flutter_riverpod/flutter_riverpod.dart';
+    import 'package:go_router/go_router.dart';
+    import 'package:voiceflow_notes/core/theme/app_theme.dart';
+    import 'package:voiceflow_notes/domain/entities/note.dart';
+    import 'package:voiceflow_notes/presentation/providers/notes_provider.dart';
+
+    class TrashedNoteDetailPage extends ConsumerWidget {
+      final String noteId;
+
+      const TrashedNoteDetailPage({super.key, required this.noteId});
+
+      @override
+      Widget build(BuildContext context, WidgetRef ref) {
+        final noteAsync = ref.watch(trashedNoteByIdProvider(noteId));
+
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Deleted Note'),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => context.go('/trash'),
+            ),
+          ),
+          body: noteAsync.when(
+            data: (note) => _NoteDetailContent(note: note!),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (_, __) => const Center(child: Text('Failed to load note')),
+          ),
+          bottomNavigationBar: noteAsync.when(
+            data: (note) => _ActionBar(note: note!),
+            loading: () => const SizedBox.shrink(),
+            error: (_, __) => const SizedBox.shrink(),
+          ),
+        );
+      }
+    }
+
+    class _NoteDetailContent extends StatelessWidget {
+      final Note note;
+
+      const _NoteDetailContent({required this.note});
+
+      @override
+      Widget build(BuildContext context) {
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title (read-only)
+              Text(
+                note.title.isEmpty ? 'Untitled' : note.title,
+                style: AppTheme.noteTitleStyle(context),
+              ),
+              const SizedBox(height: 16),
+              
+              // Metadata
+              Row(
+                children: [
+                  Icon(Icons.delete_outline, 
+                    size: 16, 
+                    color: Theme.of(context).colorScheme.outline),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Deleted ${_formatDate(note.deletedAt!)}',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(width: 16),
+                  Icon(Icons.hourglass_empty, 
+                    size: 16, 
+                    color: Theme.of(context).colorScheme.error),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${note.daysRemainingInTrash} days left',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ],
+              ),
+              
+              const Divider(height: 32),
+              
+              // Content (read-only)
+              Text(
+                note.content.isEmpty ? 'No content' : note.content,
+                style: AppTheme.noteContentStyle(context),
+              ),
+            ],
+          ),
+        );
+      }
+
+      String _formatDate(DateTime date) {
+        return '${date.day}/${date.month}/${date.year}';
+      }
+    }
+
+    class _ActionBar extends ConsumerWidget {
+      final Note note;
+
+      const _ActionBar({required this.note});
+
+      @override
+      Widget build(BuildContext context, WidgetRef ref) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                // Restore button
+                Expanded(
+                  flex: 2,
+                  child: ElevatedButton.icon(
+                    onPressed: () => _restoreNote(context, ref),
+                    icon: const Icon(Icons.restore_from_trash),
+                    label: const Text('Restore'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                // Permanent delete button
+                Expanded(
+                  flex: 1,
+                  child: ElevatedButton.icon(
+                    onPressed: () => _permanentlyDelete(context, ref),
+                    icon: const Icon(Icons.delete_forever, color: Colors.red),
+                    label: const Text('Delete', style: TextStyle(color: Colors.red)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red.withOpacity(0.1),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+
+      Future<void> _restoreNote(BuildContext context, WidgetRef ref) async {
+        final useCase = ref.read(restoreFromTrashUseCaseProvider);
+        final result = await useCase(RestoreFromTrashParams(note.id));
+        
+        if (result.isSuccess && context.mounted) {
+          context.go('/trash');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Note restored')),
+          );
+        }
+      }
+
+      Future<void> _permanentlyDelete(BuildContext context, WidgetRef ref) async {
+        final confirm = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Permanently Delete?'),
+            content: const Text('This note will be permanently deleted and cannot be recovered.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: Text('Delete', style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              ),
+            ],
+          ),
+        );
+
+        if (confirm == true && context.mounted) {
+          final useCase = ref.read(permanentlyDeleteNoteUseCaseProvider);
+          final result = await useCase(PermanentlyDeleteNoteParams(note.id));
+          
+          if (result.isSuccess && context.mounted) {
+            context.go('/trash');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Note permanently deleted')),
+            );
+          }
+        }
+      }
+    }
+  </write>
+</task>
+
+<task>
+  <action>Add route for trashed note detail</action>
+  <edit file="lib/core/navigation/router.dart">
+    // Add route:
+    GoRoute(
+      path: '/trash/:id',
+      builder: (context, state) {
+        final noteId = state.pathParameters['id']!;
+        return TrashedNoteDetailPage(noteId: noteId);
+      },
+    ),
+  </edit>
+</task>
+
+<task>
+  <action>Update TrashPage to support tap navigation</action>
+  <edit file="lib/presentation/pages/trash_page.dart">
+    // In _TrashedNoteCard, wrap with InkWell:
+    InkWell(
+      onTap: () => context.go('/trash/${note.id}'),
+      child: Card(
+        // ... existing card content ...
+      ),
+    )
+  </edit>
+</task>
+
+<task>
+  <action>Add provider for single trashed note</action>
+  <edit file="lib/presentation/providers/notes_provider.dart">
+    // Add provider:
+    final trashedNoteByIdProvider = FutureProvider.family<Note?, String>((ref, noteId) async {
+      final useCase = ref.watch(getTrashedNoteByIdUseCaseProvider);
+      final result = await useCase(GetTrashedNoteByIdParams(noteId));
+      return result.value;
+    });
+  </edit>
+</task>
+```
+
+**Files Modified:**
+- `lib/presentation/pages/trashed_note_detail_page.dart` (new)
+- `lib/core/navigation/router.dart`
+- `lib/presentation/pages/trash_page.dart`
+- `lib/presentation/providers/notes_provider.dart`
+- `lib/domain/usecases/get_trashed_note_by_id_usecase.dart` (new)
+
+**Must Haves for Success:**
+- [ ] Tapping a trashed note opens detail view
+- [ ] Shows full title and content
+- [ ] Shows deletion date and days remaining
+- [ ] Restore button returns note to active
+- [ ] Delete button permanently deletes with confirmation
+- [ ] Read-only display (no editing)
+
+---
+
+### Plan 04-11: Test CRUD Operations
 
 **Task:** Verify all note operations work
 
