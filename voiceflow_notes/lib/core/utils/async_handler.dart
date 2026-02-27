@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:voiceflow_notes/core/errors/app_exception.dart';
-import 'package:voiceflow_notes/core/utils/result.dart';
+import '../errors/app_exception.dart';
+import 'result.dart';
 
 typedef AsyncOperation<T> = Future<T> Function();
 

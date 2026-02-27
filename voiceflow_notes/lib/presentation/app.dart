@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:voiceflow_notes/core/navigation/router.dart';
+import 'package:voiceflow_notes/core/theme/app_theme.dart';
 
 class VoiceFlowApp extends ConsumerWidget {
   const VoiceFlowApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
+    final router = ref.watch(routerProvider);
+
+    return MaterialApp.router(
       title: 'VoiceFlow Notes',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Scaffold(
-        body: Center(
-          child: Text('VoiceFlow Notes - Ready to build'),
-        ),
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
+      routerConfig: router,
     );
   }
 }

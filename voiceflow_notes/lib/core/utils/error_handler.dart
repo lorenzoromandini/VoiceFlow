@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:voiceflow_notes/core/errors/app_exception.dart';
+import '../errors/app_exception.dart';
 
 class ErrorHandler {
   static String getUserFriendlyMessage(AppException error) {

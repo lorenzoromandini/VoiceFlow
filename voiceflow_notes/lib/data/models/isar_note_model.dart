@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:voiceflow_notes/domain/entities/note.dart';
+import '../../domain/entities/note.dart';
 
 part 'isar_note_model.g.dart';
 

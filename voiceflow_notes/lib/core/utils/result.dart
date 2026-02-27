@@ -1,4 +1,4 @@
-import 'package:voiceflow_notes/core/errors/app_exception.dart';
+import '../errors/app_exception.dart';
 
 sealed class Result<T> {
   const Result();
@@ -37,6 +37,7 @@ class Success<T> extends Result<T> {
 }
 
 class Failure<T> extends Result<T> {
+  @override
   final AppException error;
   const Failure(this.error);
 }
