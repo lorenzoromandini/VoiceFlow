@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../providers/notes_provider.dart';
 import 'responsive_layout.dart';
 
-class AppShell extends StatelessWidget {
+class AppShell extends ConsumerWidget {
   final Widget body;
   final String currentPath;
 
@@ -24,19 +26,41 @@ class AppShell extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDesktop = Breakpoints.isDesktop(context);
+    final trashedCount = ref.watch(trashedNotesCountProvider);
 
     return ResponsiveScaffold(
       appBar: AppBar(
         title: const Text('VoiceFlow'),
         actions: [
+          // Search button
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              // Search functionality
+              // TODO: Implement search
             },
           ),
+          
+          // Trash button with badge
+          IconButton(
+            icon: trashedCount.when(
+              data: (count) => count > 0
+                  ? Badge(
+                      label: Text(
+                        count > 99 ? '99+' : '$count',
+                        style: const TextStyle(fontSize: 10),
+                      ),
+                      child: const Icon(Icons.delete_outline),
+                    )
+                  : const Icon(Icons.delete_outline),
+              loading: () => const Icon(Icons.delete_outline),
+              error: (_, __) => const Icon(Icons.delete_outline),
+            ),
+            tooltip: 'Trash',
+            onPressed: () => context.go('/trash'),
+          ),
+          
           if (isDesktop)
             IconButton(
               icon: const Icon(Icons.settings),
