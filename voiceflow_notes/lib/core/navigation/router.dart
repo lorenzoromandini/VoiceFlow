@@ -6,11 +6,19 @@ import '../../presentation/pages/note_editor_page.dart';
 import '../../presentation/pages/settings_page.dart';
 import '../../presentation/pages/about_page.dart';
 import '../../presentation/pages/trash_page.dart';
+import '../../presentation/pages/welcome_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/',
+    initialLocation: '/welcome',
     routes: [
+      // Welcome - First launch
+      GoRoute(
+        path: '/welcome',
+        name: 'welcome',
+        builder: (context, state) => const WelcomePage(),
+      ),
+      
       // Home - Note list
       GoRoute(
         path: '/',
