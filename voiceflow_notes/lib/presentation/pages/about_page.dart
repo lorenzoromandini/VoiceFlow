@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:voiceflow_notes/presentation/widgets/app_shell.dart';
+import '../widgets/app_shell.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

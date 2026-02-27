@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:voiceflow_notes/core/navigation/router.dart';
-import 'package:voiceflow_notes/core/theme/app_theme.dart';
+import '../core/navigation/router.dart';
+import '../core/theme/app_theme.dart';
 
 class VoiceFlowApp extends ConsumerWidget {
   const VoiceFlowApp({super.key});

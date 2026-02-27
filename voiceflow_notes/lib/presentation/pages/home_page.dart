@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:voiceflow_notes/presentation/widgets/app_shell.dart';
-import 'package:voiceflow_notes/presentation/widgets/skeleton.dart';
+import '../widgets/app_shell.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

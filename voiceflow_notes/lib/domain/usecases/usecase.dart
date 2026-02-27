@@ -1,4 +1,4 @@
-import 'package:voiceflow_notes/core/utils/result.dart';
+import '../../core/utils/result.dart';
 
 abstract class UseCase<Type, Params> {
   Future<Result<Type>> call(Params params);
