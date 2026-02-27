@@ -28,9 +28,9 @@
 
 ## Wave 1: Data Models (35 min)
 
-### Plan 04-01: Complete Isar Note Model
+### Plan 04-01: Complete Isar Note Model (with Trash)
 
-**Task:** Finalize Note entity with all fields
+**Task:** Finalize Note entity with all fields including trash functionality
 
 ```xml
 <task>
@@ -39,7 +39,7 @@
     import 'package:equatable/equatable.dart';
 
     /// Domain entity for a Note
-    /// Represents a text note with metadata
+    /// Represents a text note with metadata and trash state
     class Note extends Equatable {
       final String id;                    // UUID for cross-platform sync
       final String title;                  // Note title
@@ -48,6 +48,10 @@
       final DateTime updatedAt;            // Last modification timestamp
       final bool isSynced;                 // Cloud sync status
       final String? userId;                // Owner (null for local-only)
+      
+      // Trash fields
+      final bool isDeleted;                // Soft delete flag
+      final DateTime? deletedAt;             // When moved to trash (null if not deleted)
 
       const Note({
         required this.id,
@@ -57,7 +61,23 @@
         required this.updatedAt,
         this.isSynced = false,
         this.userId,
+        this.isDeleted = false,
+        this.deletedAt,
       });
+
+      /// Check if note should be auto-deleted (after 15 days in trash)
+      bool get shouldBePermanentlyDeleted {
+        if (!isDeleted || deletedAt == null) return false;
+        final daysInTrash = DateTime.now().difference(deletedAt!).inDays;
+        return daysInTrash >= 15;
+      }
+
+      /// Days remaining before permanent deletion
+      int get daysRemainingInTrash {
+        if (!isDeleted || deletedAt == null) return 0;
+        final daysInTrash = DateTime.now().difference(deletedAt!).inDays;
+        return (15 - daysInTrash).clamp(0, 15);
+      }
 
       /// Create empty note with new ID
       factory Note.empty() {
@@ -71,7 +91,21 @@
         );
       }
 
-      /// Get preview text (first 100 chars of content)
+      /// Convert to trash state
+      Note toTrash() {
+        return copyWith(
+          isDeleted: true,
+          deletedAt: DateTime.now(),
+        );
+      }
+
+      /// Restore from trash
+      Note restore() {
+        return copyWith(
+          isDeleted: false,
+          deletedAt: null,
+        );
+      }
       String get preview {
         if (content.isEmpty) return '';
         final lines = content.split('\n');
