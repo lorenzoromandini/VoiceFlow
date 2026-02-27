@@ -44,6 +44,9 @@ abstract class NoteRepository {
   /// Get all trashed notes
   Future<Result<List<Note>>> getTrashedNotes();
 
+  /// Get stream of trashed notes for reactive updates
+  Stream<List<Note>> getTrashedNotesStream();
+
   /// Permanently delete note (bypass trash)
   Future<Result<void>> permanentlyDeleteNote(String id);
 

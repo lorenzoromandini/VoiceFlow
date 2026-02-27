@@ -5,6 +5,7 @@ import '../../presentation/pages/home_page.dart';
 import '../../presentation/pages/note_editor_page.dart';
 import '../../presentation/pages/settings_page.dart';
 import '../../presentation/pages/about_page.dart';
+import '../../presentation/pages/trash_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -39,6 +40,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/settings',
         name: 'settings',
         builder: (context, state) => const SettingsPage(),
+      ),
+      
+      // Trash
+      GoRoute(
+        path: '/trash',
+        name: 'trash',
+        builder: (context, state) => const TrashPage(),
       ),
       
       // About

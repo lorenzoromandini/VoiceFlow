@@ -334,6 +334,33 @@ class IsarNoteRepository implements NoteRepository {
   }
 
   @override
+  Future<Result<int>> getTrashedNotesCount() async {
+    try {
+      final count = await _isar.isarNoteModels
+          .where()
+          .isDeletedEqualTo(true)
+          .count();
+      return Success(count);
+    } catch (e, stackTrace) {
+      return Failure(NoteException(
+        NoteErrorCode.databaseError,
+        'Failed to count trashed notes: $e',
+        stackTrace: stackTrace,
+      ));
+    }
+  }
+
+  @override
+  Stream<List<Note>> getTrashedNotesStream() {
+    return _isar.isarNoteModels
+        .where()
+        .isDeletedEqualTo(true)
+        .sortByDeletedAtDesc()
+        .watch(fireImmediately: true)
+        .map((models) => models.map((m) => m.toEntity()).toList());
+  }
+
+  @override
   Future<Result<void>> deleteAllNotes() async {
     try {
       await _isar.writeTxn(() async {
